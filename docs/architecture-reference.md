@@ -59,9 +59,9 @@ graph TD
     classDef spoke fill:#e6f3ff,stroke:#333,stroke-width:2px;
     class Hub hub;
     class SpokeProd spoke;
+```
 
-
-    ### EKS Ingress & Pod Identity Auth Flow
+### EKS Ingress & Pod Identity Auth Flow
 ```mermaid
 sequenceDiagram
     participant Client
@@ -79,3 +79,4 @@ sequenceDiagram
     IAM-->>Pod: 5. Return Short-Lived IAM Role Token
     Pod->>Data: 6. Authenticated API Call using Token
     Data-->>Pod: 7. Secure Data Response
+```
