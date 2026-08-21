@@ -59,3 +59,23 @@ graph TD
     classDef spoke fill:#e6f3ff,stroke:#333,stroke-width:2px;
     class Hub hub;
     class SpokeProd spoke;
+
+
+    ### EKS Ingress & Pod Identity Auth Flow
+```mermaid
+sequenceDiagram
+    participant Client
+    participant ALB as AWS Application Load Balancer
+    participant Ingress as EKS Ingress Controller
+    participant Pod as EKS Application Pod
+    participant IAM as AWS IAM (OIDC Provider)
+    participant Data as AWS Data Subnet (e.g., RDS/S3)
+
+    Client->>ALB: 1. HTTPS Request
+    ALB->>Ingress: 2. Route Traffic to Worker Node
+    Ingress->>Pod: 3. Forward Request to Application
+    Note over Pod,IAM: IRSA / Pod Identity Flow
+    Pod->>IAM: 4. Request Temp STS Credentials via OIDC Token
+    IAM-->>Pod: 5. Return Short-Lived IAM Role Token
+    Pod->>Data: 6. Authenticated API Call using Token
+    Data-->>Pod: 7. Secure Data Response
